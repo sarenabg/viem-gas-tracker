@@ -28,7 +28,7 @@ async function fetchGasSpentEtherscan() {
     }
 
     const latestBlock = BigInt(latestBlockData.result);
-    const startBlock = latestBlock - 100000n;  // Check transactions from the last 1,000 blocks
+    const startBlock = latestBlock - 10000000n;  // Check transactions from the last 1,000 blocks
 
     // Construct the Etherscan API URL to fetch transactions
     const url = `https://api-sepolia.etherscan.io/api?module=account&action=txlist&address=${sender}&startblock=${startBlock}&endblock=latest&sort=asc&apikey=${ETHERSCAN_API_KEY}`;

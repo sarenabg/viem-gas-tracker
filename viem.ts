@@ -1,7 +1,7 @@
 import { formatEther } from "https://esm.sh/viem";
 
 // 🔑 Hardcoded Etherscan API key (replace with your actual key)
-const ETHERSCAN_API_KEY = "your_actual_api_key_here";
+const ETHERSCAN_API_KEY = "14N8SWJQQFIPKX1NHEPG2MESEY7VHWDSRW";
 
 const sender = "0x396F2A890F790470c984249D4302df089440C9A7".toLowerCase();
 const receiver = "0x248894108C9e5c64B195f0482aFf4415021B002E".toLowerCase();
@@ -10,7 +10,7 @@ async function fetchGasSpentEtherscan() {
   document.getElementById("result")!.textContent = "Fetching transactions...";
 
   try {
-    // 🔹 Use POST request with JSON body to fetch the latest block
+    // Use a POST request to fetch the latest block number from Alchemy
     const latestBlockResponse = await fetch("https://eth-sepolia.g.alchemy.com/v2/HlSblFQrHPqPA3Ps1nADamid9ZckXWRw", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -28,9 +28,9 @@ async function fetchGasSpentEtherscan() {
     }
 
     const latestBlock = BigInt(latestBlockData.result);
-    const startBlock = latestBlock - 1000n;  // Last 1,000 blocks
+    const startBlock = latestBlock - 100000n;  // Check transactions from the last 1,000 blocks
 
-    // 🔹 Construct the Etherscan API URL
+    // Construct the Etherscan API URL to fetch transactions
     const url = `https://api-sepolia.etherscan.io/api?module=account&action=txlist&address=${sender}&startblock=${startBlock}&endblock=latest&sort=asc&apikey=${ETHERSCAN_API_KEY}`;
 
     const response = await fetch(url);
@@ -53,7 +53,6 @@ async function fetchGasSpentEtherscan() {
       }
     }
 
-    // 🔹 Update the UI with the final total gas spent
     document.getElementById("result")!.textContent =
       `Total Gas Spent: ${formatEther(totalGasSpent)} ETH (in ${txCount} transactions)`;
 
@@ -63,5 +62,5 @@ async function fetchGasSpentEtherscan() {
   }
 }
 
-// 🔹 Make sure the function is available globally for the button in index.html
+// Expose the function globally so that the HTML button can call it
 (window as any).calculateGas = fetchGasSpentEtherscan;

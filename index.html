@@ -4,16 +4,79 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sepolia Gas Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+    .success {
+      color: green;
+      font-weight: bold;
+    }
+    button {
+      padding: 10px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px 0;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #result {
+      margin: 15px 0;
+      padding: 10px;
+      background-color: #f5f5f5;
+      border-radius: 4px;
+    }
+    .transaction {
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    #status {
+      font-style: italic;
+      color: #666;
+    }
+  </style>
 </head>
 <body>
-  <h2>Gas Spent by Address on Sepolia</h2>
-  <p>Tracking transactions from:</p>
-  <p><b>Sender:</b> 0x396F2A890F790470c984249D4302df089440C9A7</p>
-  <p><b>Receiver:</b> 0x248894108C9e5c64B195f0482aFf4415021B002E</p>
+  <h1>Sepolia Gas Tracker</h1>
   
-  <button onclick="calculateGas()">Calculate Gas Spent</button>
-  <p id="result"></p>
-
+  <div>
+    <h2>Tracking Transactions</h2>
+    <p><b>Sender:</b> 0x396F2A890F790470c984249D4302df089440C9A7</p>
+    <p><b>Receiver:</b> 0x248894108C9e5c64B195f0482aFf4415021B002E</p>
+    
+    <p id="status">Ready to fetch transaction data.</p>
+    
+    <button onclick="calculateGas()">Calculate Gas Spent</button>
+    <button onclick="clearResults()">Clear Results</button>
+  </div>
+  
+  <div id="result"></div>
+  
+  <script>
+    function clearResults() {
+      document.getElementById('result').textContent = '';
+      const detailsElement = document.getElementById('transaction-details');
+      if (detailsElement) {
+        detailsElement.remove();
+      }
+      document.getElementById('status').textContent = 'Results cleared. Ready to fetch transaction data.';
+    }
+  </script>
+  
   <!-- Link to the compiled JavaScript -->
   <script type="module" src="dist/viem.js"></script>
 </body>

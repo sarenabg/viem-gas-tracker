@@ -1,6 +1,6 @@
 import { formatEther } from "https://esm.sh/viem";
 
-// 🔑 Hardcoded Etherscan API key (replace with your actual key)
+// Loaded from the build environment; never commit API keys.
 const ETHERSCAN_API_KEY = import.meta.env.VITE_ETHERSCAN_API_KEY;
 
 const sender = "0x396F2A890F790470c984249D4302df089440C9A7".toLowerCase();
@@ -14,7 +14,7 @@ async function fetchTransactions(): Promise<any[]> {
   // Query transactions where the sender is our specified address
   const url = `https://api-sepolia.etherscan.io/api?module=account&action=txlist&address=${sender}&startblock=0&endblock=latest&sort=asc&apikey=${ETHERSCAN_API_KEY}`;
   
-  console.log("Fetching transactions with URL:", url);
+  console.log("Fetching sender transactions from Etherscan");
   
   try {
     const response = await fetch(url);
@@ -42,7 +42,7 @@ async function fetchTransactions(): Promise<any[]> {
 async function fetchTransactionsByReceiver(): Promise<any[]> {
   const url = `https://api-sepolia.etherscan.io/api?module=account&action=txlist&address=${receiver}&startblock=0&endblock=latest&sort=asc&apikey=${ETHERSCAN_API_KEY}`;
   
-  console.log("Fetching receiver transactions with URL:", url);
+  console.log("Fetching receiver transactions from Etherscan");
   
   try {
     const response = await fetch(url);
